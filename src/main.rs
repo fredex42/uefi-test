@@ -11,18 +11,18 @@ fn main(_image_handle: Handle, mut system_table:SystemTable<Boot>) -> Status {
     uefi::helpers::init(&mut system_table).unwrap();
     info!("Hello world!");
 
-    match get_memory_map(&system_table) {
-        Ok(map)=>{
-            info!("Got memory map");
-            info!("Start addr | Length in pages | Type");
-            map.entries().for_each(|e| {
-                info!("{:#08x}   | {:08x}       |", e.phys_start, e.page_count);
-            });
+    // match get_memory_map(&system_table) {
+    //     Ok(map)=>{
+    //         info!("Got memory map");
+    //         info!("Start addr | Length in pages | Type");
+    //         map.entries().for_each(|e| {
+    //             info!("{:#08x}   | {:08x}       |", e.phys_start, e.page_count);
+    //         });
             
-        },
-        Err(e)=>
-            error!("Could not get memory map: {}", e)
-    }
+    //     },
+    //     Err(e)=>
+    //         error!("Could not get memory map: {}", e)
+    // }
 
     print_image_path(system_table.boot_services());
     system_table.boot_services().stall(10_000_000);
